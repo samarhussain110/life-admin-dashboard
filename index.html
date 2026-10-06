@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f6fa">
+  <title>Life Admin — Your life, in good order</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div class="app-shell">
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" data-page="dashboard" aria-label="Life Admin dashboard">
+        <span class="brand-mark"><i class="fa-solid fa-leaf"></i></span>
+        <span><strong>life<span>admin</span></strong><small>YOUR LIFE, IN GOOD ORDER</small></span>
+      </a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-page="dashboard"><i class="fa-solid fa-grid-2"></i><span>Overview</span></button>
+        <button class="nav-link" data-page="calendar"><i class="fa-regular fa-calendar"></i><span>Calendar</span></button>
+        <button class="nav-link" data-page="tasks"><i class="fa-solid fa-check-double"></i><span>Tasks</span><span class="nav-count" id="taskNavCount"></span></button>
+        <button class="nav-link" data-page="documents"><i class="fa-regular fa-folder-open"></i><span>Documents</span></button>
+        <button class="nav-link" data-page="bills"><i class="fa-regular fa-credit-card"></i><span>Bills &amp; payments</span></button>
+        <button class="nav-link" data-page="goals"><i class="fa-solid fa-bullseye"></i><span>Goals</span></button>
+        <button class="nav-link" data-page="reminders"><i class="fa-regular fa-bell"></i><span>Reminders</span></button>
+        <button class="nav-link" data-page="insights"><i class="fa-solid fa-chart-pie"></i><span>Insights</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="nav-link" data-page="settings"><i class="fa-solid fa-sliders"></i><span>Settings</span></button>
+        <div class="profile-mini"><div class="avatar" id="sidebarProfileAvatar"><i class="fa-solid fa-user"></i></div><div class="profile-copy"><strong id="sidebarProfileName">Your profile</strong><small>Personal workspace</small></div></div>
+        <div class="sidebar-note"><i class="fa-regular fa-lightbulb"></i><span>Small steps make a<br>well-organized life.</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="icon-button mobile-menu" id="mobileMenu" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+        <div class="topbar-title"><span class="eyebrow">PERSONAL WORKSPACE</span><h1 id="pageTitle">Overview</h1></div>
+        <div class="topbar-actions">
+          <div class="global-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input id="globalSearch" type="search" placeholder="Search anything..." aria-label="Search all your data">
+            <kbd>⌘ K</kbd>
+            <div class="search-results" id="searchResults" hidden></div>
+          </div>
+          <button class="icon-button theme-toggle" id="themeToggle" aria-label="Toggle color theme"><i class="fa-regular fa-moon"></i></button>
+          <div class="notification-wrap">
+            <button class="icon-button notification-button" id="notificationButton" aria-label="View notifications"><i class="fa-regular fa-bell"></i><span class="notification-dot" id="notificationDot"></span></button>
+            <div class="notification-panel" id="notificationPanel" hidden></div>
+          </div>
+          <button class="top-profile" id="profileShortcut" type="button" aria-label="Edit your profile"><span class="top-avatar" id="topProfileAvatar"><i class="fa-solid fa-user"></i></span><span id="topProfileName">Your profile</span></button>
+        </div>
+      </header>
+      <div class="content-area">
+        <section class="page-section active" id="page-dashboard">
+          <div class="welcome-row">
+            <div><div class="welcome-date" id="todayDate"></div><h2 id="greeting">Welcome!</h2><p>Here’s what needs your attention today.</p></div>
+            <button class="btn btn-primary-custom" data-action="add-task"><i class="fa-solid fa-plus"></i> New task</button>
+          </div>
+          <div class="quick-actions">
+            <button data-action="add-task"><span class="quick-icon violet"><i class="fa-solid fa-check"></i></span><span>Add a task</span><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <button data-action="add-bill"><span class="quick-icon green"><i class="fa-solid fa-receipt"></i></span><span>Track a bill</span><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <button data-action="add-document"><span class="quick-icon amber"><i class="fa-regular fa-folder-open"></i></span><span>Add a document</span><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <button data-action="add-goal"><span class="quick-icon blue"><i class="fa-solid fa-bullseye"></i></span><span>Set a goal</span><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+            <button data-action="add-reminder"><span class="quick-icon rose"><i class="fa-regular fa-bell"></i></span><span>Set a reminder</span><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+          </div>
+          <div class="dashboard-grid planning-grid">
+            <div class="card-panel focus-panel">
+              <div class="panel-heading"><div><span class="section-kicker">MAKE TODAY COUNT</span><h3>Focus for today</h3></div><button class="text-link" id="editFocus"><i class="fa-solid fa-thumbtack"></i> Choose priorities</button></div>
+              <div id="focusList"></div>
+            </div>
+            <div class="card-panel weekly-panel">
+              <div class="panel-heading"><div><span class="section-kicker">A QUICK LOOK AHEAD</span><h3>Your week</h3></div><i class="fa-regular fa-calendar-check weekly-icon"></i></div>
+              <div id="weeklySummary" class="weekly-summary"></div>
+            </div>
+          </div>
+          <div class="overview-grid" id="overviewCards"></div>
+          <div class="dashboard-grid">
+            <div class="card-panel attention-panel">
+              <div class="panel-heading"><div><span class="section-kicker">STAY AHEAD</span><h3>Needs attention <span class="heading-count" id="attentionCount">0</span></h3></div><button class="text-link" id="viewAttention">View all <i class="fa-solid fa-arrow-right"></i></button></div>
+              <div id="attentionList" class="attention-list"></div>
+            </div>
+            <div class="card-panel pulse-panel">
+              <div class="panel-heading"><div><span class="section-kicker">YOUR WEEK AT A GLANCE</span><h3>Life pulse</h3></div><button class="subtle-icon" data-page="insights" aria-label="View insights"><i class="fa-solid fa-arrow-up-right-from-square"></i></button></div>
+              <div class="pulse-score"><div class="pulse-ring" id="pulseRing"><span id="pulseScore">0</span><small>out of 100</small></div><div><strong>You’re finding your rhythm</strong><p>Good progress. Keep tending to the little things.</p></div></div>
+              <div id="pulseMetrics" class="pulse-metrics"></div>
+              <div class="pulse-footer"><i class="fa-solid fa-sparkles"></i> A little progress each day adds up.</div>
+            </div>
+          </div>
+          <div class="dashboard-grid lower-grid">
+            <div class="card-panel timeline-panel">
+              <div class="panel-heading"><div><span class="section-kicker">WHAT'S NEXT</span><h3>Upcoming timeline</h3></div><button class="text-link" data-page="calendar">Calendar <i class="fa-solid fa-arrow-right"></i></button></div>
+              <div id="timelineList" class="timeline-list"></div>
+            </div>
+            <div class="card-panel activity-panel">
+              <div class="panel-heading"><div><span class="section-kicker">A LITTLE HISTORY</span><h3>Recent activity</h3></div><span class="live-indicator">● LIVE</span></div>
+              <div id="activityList" class="activity-list"></div>
+            </div>
+          </div>
+          <div class="card-panel dashboard-chart">
+            <div class="panel-heading"><div><span class="section-kicker">YOUR MONEY, MADE CLEAR</span><h3>Monthly expenses</h3></div><button class="text-link" data-page="insights">Full insights <i class="fa-solid fa-arrow-right"></i></button></div>
+            <div class="chart-container"><canvas id="dashboardExpenseChart" aria-label="Monthly expenses chart"></canvas></div>
+          </div>
+        </section>
+
+        <section class="page-section" id="page-tasks">
+          <div class="page-intro"><div><span class="section-kicker">MAKE ROOM FOR WHAT MATTERS</span><h2>Your tasks</h2><p>One thing at a time. You’ve got this.</p></div><button class="btn btn-primary-custom" data-action="add-task"><i class="fa-solid fa-plus"></i> Add task</button></div>
+          <div class="stats-strip" id="taskStats"></div>
+          <div class="card-panel data-panel"><div class="filter-bar"><div class="local-search"><i class="fa-solid fa-magnifying-glass"></i><input id="tasksSearch" placeholder="Find a task..." aria-label="Search tasks"></div><select id="tasksStatus" aria-label="Filter by status"><option value="">All statuses</option><option>Pending</option><option>In Progress</option><option>Completed</option></select><select id="tasksPriority" aria-label="Filter by priority"><option value="">All priorities</option><option>High</option><option>Medium</option><option>Low</option></select><select id="tasksCategory" aria-label="Filter by category"><option value="">All categories</option></select><select id="tasksSort" aria-label="Sort tasks"><option value="date">Due date</option><option value="priority">Priority</option><option value="created">Recently added</option></select></div><div id="tasksList"></div></div>
+        </section>
+        <section class="page-section" id="page-documents">
+          <div class="page-intro"><div><span class="section-kicker">IMPORTANT THINGS, SAFELY TRACKED</span><h2>Documents</h2><p>Know what’s valid, and what needs renewing.</p></div><button class="btn btn-primary-custom" data-action="add-document"><i class="fa-solid fa-plus"></i> Add document</button></div>
+          <div class="stats-strip" id="documentStats"></div>
+          <div class="card-panel data-panel"><div class="filter-bar"><div class="local-search"><i class="fa-solid fa-magnifying-glass"></i><input id="documentsSearch" placeholder="Find a document..." aria-label="Search documents"></div><select id="documentsType" aria-label="Filter by type"><option value="">All types</option></select><select id="documentsStatus" aria-label="Filter by expiry status"><option value="">All expiry statuses</option><option>Expired</option><option>Expiring soon</option><option>Valid</option></select></div><div id="documentsList"></div></div>
+        </section>
+        <section class="page-section" id="page-bills">
+          <div class="page-intro"><div><span class="section-kicker">MONEY, WITHOUT THE MYSTERY</span><h2>Bills &amp; payments</h2><p>Stay on top of what’s due and where it goes.</p></div><button class="btn btn-primary-custom" data-action="add-bill"><i class="fa-solid fa-plus"></i> Add bill</button></div>
+          <div class="stats-strip" id="billStats"></div>
+          <div class="card-panel data-panel"><div class="filter-bar"><div class="local-search"><i class="fa-solid fa-magnifying-glass"></i><input id="billsSearch" placeholder="Find a bill..." aria-label="Search bills"></div><select id="billsStatus" aria-label="Filter bills by status"><option value="">All payment statuses</option><option>Paid</option><option>Pending</option><option>Overdue</option></select><select id="billsCategory" aria-label="Filter bills by category"><option value="">All categories</option></select><select id="billsSort" aria-label="Sort bills"><option value="date">Due date</option><option value="amount">Amount</option></select></div><div id="billsList"></div></div>
+        </section>
+        <section class="page-section" id="page-goals">
+          <div class="page-intro"><div><span class="section-kicker">A FUTURE YOU'RE BUILDING</span><h2>Your goals</h2><p>Every bit of progress counts.</p></div><button class="btn btn-primary-custom" data-action="add-goal"><i class="fa-solid fa-plus"></i> Add goal</button></div>
+          <div class="stats-strip" id="goalStats"></div><div class="filter-bar standalone-filters"><div class="local-search"><i class="fa-solid fa-magnifying-glass"></i><input id="goalsSearch" placeholder="Find a goal..." aria-label="Search goals"></div><select id="goalsStatus" aria-label="Filter goals"><option value="">All goals</option><option>In progress</option><option>Completed</option></select><select id="goalsSort" aria-label="Sort goals"><option value="date">Deadline</option><option value="progress">Progress</option></select></div><div class="goal-grid" id="goalsList"></div>
+        </section>
+        <section class="page-section" id="page-reminders">
+          <div class="page-intro"><div><span class="section-kicker">DON'T LET IT SLIP YOUR MIND</span><h2>Reminders</h2><p>Gentle nudges for the things that matter.</p></div><button class="btn btn-primary-custom" data-action="add-reminder"><i class="fa-solid fa-plus"></i> Add reminder</button></div>
+          <div class="stats-strip" id="reminderStats"></div><div class="card-panel data-panel"><div class="filter-bar"><div class="local-search"><i class="fa-solid fa-magnifying-glass"></i><input id="remindersSearch" placeholder="Find a reminder..." aria-label="Search reminders"></div><select id="remindersStatus" aria-label="Filter reminders"><option value="">All reminders</option><option>Upcoming</option><option>Completed</option></select><select id="remindersSort" aria-label="Sort reminders"><option value="date">Date</option><option value="priority">Priority</option></select></div><div id="remindersList"></div></div>
+        </section>
+        <section class="page-section" id="page-calendar">
+          <div class="page-intro"><div><span class="section-kicker">YOUR LIFE, IN GOOD ORDER</span><h2>Calendar</h2><p>Tasks, plans and reminders in one place.</p></div><button class="btn btn-primary-custom" data-action="add-event"><i class="fa-solid fa-plus"></i> Add event</button></div>
+          <div class="calendar-layout"><div class="card-panel calendar-panel"><div class="calendar-toolbar"><button class="subtle-icon" id="prevMonth" aria-label="Previous month"><i class="fa-solid fa-chevron-left"></i></button><h3 id="calendarMonth"></h3><button class="subtle-icon" id="nextMonth" aria-label="Next month"><i class="fa-solid fa-chevron-right"></i></button><button class="today-button" id="calendarToday">Today</button></div><div class="calendar-weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div><div class="calendar-grid" id="calendarGrid"></div></div><div class="card-panel selected-day-panel"><span class="section-kicker">YOUR PLANS</span><h3 id="selectedDayTitle">Select a day</h3><div id="selectedDayItems"></div></div></div>
+        </section>
+        <section class="page-section" id="page-insights">
+          <div class="page-intro"><div><span class="section-kicker">A CLEARER PICTURE</span><h2>Your insights</h2><p>Patterns that help you make a little more room.</p></div></div>
+          <div class="stats-strip" id="insightStats"></div>
+          <div class="insights-grid"><div class="card-panel insight-card"><div class="panel-heading"><div><span class="section-kicker">SPENDING</span><h3>Monthly expenses</h3></div></div><div class="chart-container"><canvas id="expenseChart"></canvas></div></div><div class="card-panel insight-card"><div class="panel-heading"><div><span class="section-kicker">MOMENTUM</span><h3>Task completion</h3></div></div><div class="chart-container"><canvas id="taskChart"></canvas></div></div><div class="card-panel insight-card"><div class="panel-heading"><div><span class="section-kicker">THE BIG PICTURE</span><h3>Goals progress</h3></div></div><div class="chart-container"><canvas id="goalChart"></canvas></div></div><div class="card-panel insight-card"><div class="panel-heading"><div><span class="section-kicker">BILL CHECK-IN</span><h3>Bills status</h3></div></div><div class="chart-container"><canvas id="billChart"></canvas></div></div><div class="card-panel insight-card"><div class="panel-heading"><div><span class="section-kicker">YOUR LIFE IN MOTION</span><h3>Upcoming vs. completed</h3></div></div><div class="chart-container"><canvas id="itemsChart"></canvas></div></div></div>
+        </section>
+        <section class="page-section" id="page-settings">
+          <div class="page-intro"><div><span class="section-kicker">MAKE IT YOURS</span><h2>Settings</h2><p>A few little preferences for a life that fits you.</p></div></div>
+          <div class="settings-layout"><div class="card-panel settings-card"><span class="section-kicker">PROFILE</span><h3>Your preferences</h3><p>Choose what we call you, your currency and how dates appear. These stay in this browser.</p><form id="profileSettingsForm" class="profile-settings-form profile-preferences-form" novalidate><div class="profile-name-field"><label for="profileName">Preferred name</label><input id="profileName" name="name" type="text" maxlength="80" autocomplete="name" required placeholder="Enter your name"><div class="invalid-feedback">Please enter your name.</div></div><div class="profile-preference-field"><label for="profileCurrency">Currency</label><select id="profileCurrency" name="currency"><option value="USD">US Dollar (USD)</option><option value="CAD">Canadian Dollar (CAD)</option><option value="AUD">Australian Dollar (AUD)</option><option value="GBP">British Pound (GBP)</option><option value="EUR">Euro (EUR)</option><option value="INR">Indian Rupee (INR)</option><option value="PKR">Pakistani Rupee (PKR)</option><option value="JPY">Japanese Yen (JPY)</option></select></div><div class="profile-preference-field"><label for="profileDateFormat">Date format</label><select id="profileDateFormat" name="dateFormat"><option value="system">System default</option><option value="mdy">MM/DD/YYYY</option><option value="dmy">DD/MM/YYYY</option><option value="ymd">YYYY-MM-DD</option></select></div><button class="btn btn-primary-custom" type="submit">Save preferences</button></form></div><div class="card-panel settings-card"><span class="section-kicker">APPEARANCE</span><h3>A softer or darker workspace</h3><p>Choose the look that feels right for you.</p><div class="theme-choices"><button class="theme-choice" data-theme="light"><i class="fa-regular fa-sun"></i><span>Light</span></button><button class="theme-choice" data-theme="dark"><i class="fa-regular fa-moon"></i><span>Dark</span></button></div></div>
+          <div class="card-panel settings-card"><span class="section-kicker">PREFERENCES</span><h3>Your workspace, your way</h3><div class="setting-row"><div><strong>In-app notifications</strong><small>Show updates in the notification bell</small></div><label class="switch"><input id="settingNotifications" type="checkbox"><span></span></label></div><div class="setting-row"><div><strong>Browser notifications</strong><small id="browserNotificationStatus" role="status">Checking browser permission…</small></div><button class="btn btn-outline-custom notification-permission-button" id="enableBrowserNotifications" type="button">Enable notifications</button></div><div class="setting-row"><div><strong>Show completed items</strong><small>Include finished items in your lists</small></div><label class="switch"><input id="settingCompleted" type="checkbox"><span></span></label></div><div class="setting-row"><div><strong>Default dashboard view</strong><small>Choose where you land when you open the app</small></div><select id="settingDefaultPage"><option value="dashboard">Overview</option><option value="tasks">Tasks</option><option value="calendar">Calendar</option></select></div><button class="btn btn-primary-custom mt-3" id="saveSettings">Save preferences</button></div>
+          <div class="card-panel settings-card"><span class="section-kicker">YOUR DATA</span><h3>Your information belongs to you</h3><p>Everything stays in this browser. Export a backup any time.</p><div class="data-actions"><button class="btn btn-outline-custom" id="exportData"><i class="fa-solid fa-download"></i> Export backup</button><button class="btn btn-outline-custom" id="importData"><i class="fa-solid fa-upload"></i> Import backup</button><input id="importFile" type="file" accept="application/json,.json" hidden><button class="btn btn-danger-soft" id="clearData"><i class="fa-regular fa-trash-can"></i> Clear all data</button></div></div>
+          <div class="card-panel settings-card about-card"><span class="section-kicker">A LITTLE ABOUT</span><div class="about-brand"><span class="brand-mark"><i class="fa-solid fa-leaf"></i></span><div><h3>Life Admin Dashboard</h3><p>Version 1.0 · Made for the beautifully busy.</p></div></div><small>Your personal information is stored only in your browser’s local storage. Please don’t add passwords, financial account numbers or other highly sensitive information.</small></div></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal fade" id="profileSetupModal" tabindex="-1" aria-labelledby="profileSetupTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-sm"><div class="modal-content"><form id="profileSetupForm" novalidate><div class="modal-header"><div><span class="section-kicker">A SPACE THAT'S YOURS</span><h2 class="modal-title" id="profileSetupTitle">Set up your profile</h2></div></div><div class="modal-body"><p class="small text-muted mb-3">What should we call you? Your name stays in this browser.</p><label class="form-label small fw-semibold" for="setupProfileName">Name</label><input class="form-control" id="setupProfileName" name="name" type="text" maxlength="80" autocomplete="name" required placeholder="Enter your name"><div class="invalid-feedback">Please enter your name.</div></div><div class="modal-footer"><button type="submit" class="btn btn-primary-custom">Save and continue</button></div></form></div></div></div>
+  <div class="modal fade" id="focusModal" tabindex="-1" aria-labelledby="focusModalTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><form id="focusForm"><div class="modal-header"><div><span class="section-kicker">MAKE SPACE FOR WHAT MATTERS</span><h2 class="modal-title" id="focusModalTitle">Choose today's priorities</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><p class="small text-muted">Pick up to three unfinished tasks to keep in focus today.</p><div id="focusTaskChoices" class="focus-task-choices"></div><div class="form-text" id="focusLimitMessage">Choose up to 3 tasks.</div></div><div class="modal-footer"><button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary-custom">Save priorities</button></div></form></div></div></div>
+  <div class="modal fade" id="itemModal" tabindex="-1" aria-labelledby="itemModalTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><form id="itemForm" novalidate><div class="modal-header"><div><span class="section-kicker" id="modalKicker">LIFE ADMIN</span><h2 class="modal-title" id="itemModalTitle">Add item</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="form-grid" id="formFields"></div></div><div class="modal-footer"><button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary-custom"><i class="fa-solid fa-check"></i> Save item</button></div></form></div></div></div>
+  <div class="modal fade" id="progressModal" tabindex="-1" aria-labelledby="progressTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-sm"><div class="modal-content"><form id="progressForm" novalidate><div class="modal-header"><div><span class="section-kicker">A LITTLE CLOSER</span><h2 class="modal-title" id="progressTitle">Update progress</h2></div><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><p class="small text-muted mb-3" id="progressGoalName"></p><label class="form-label small fw-semibold" for="progressValue">Current progress</label><input class="form-control" id="progressValue" type="number" min="0" step="any" required><div class="form-text" id="progressTarget"></div><div class="invalid-feedback">Enter a valid amount within your target.</div></div><div class="modal-footer"><button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button><button type="submit" class="btn btn-primary-custom">Save progress</button></div></form></div></div></div>
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmTitle" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-sm"><div class="modal-content"><div class="modal-body confirm-body"><span class="confirm-icon"><i class="fa-regular fa-trash-can"></i></span><h2 id="confirmTitle">Delete this item?</h2><p id="confirmMessage">This action can’t be undone.</p><div class="confirm-actions"><button class="btn btn-outline-custom" data-bs-dismiss="modal">Keep it</button><button class="btn btn-danger-soft" id="confirmDelete">Delete</button></div></div></div></div></div>
+  <div class="toast-container position-fixed top-0 end-0 p-3" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+  <div class="sr-only" id="liveRegion" aria-live="polite"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
